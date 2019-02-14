@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="pets">
+
+    </ul>
+
+    <p id="petid"></p>
+
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name">
+        <br><br>
+        <label for="type">Type:</label>
+        <input type="text" name="type" id="type">
+        <br><br>
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age">
+        <br><br>
+        <button type="submit" id="add">add</button>
+        <!-- <input type="submit" value="Add" id="add"> -->
+    </form>
+
+
+</body>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+
+  <script>
+    $(function(){
+        var $name=$('#name');
+        var $type=$('#type');
+        var $age=$('#age');
+
+        $.ajax({
+            type: 'GET',
+            url:'localhost:3000/api/pets',
+            success:function(pets){
+                
+                $.each(pets,function(i,pets){
+                   $('#pets').append(`<li>pet name: ${pets.name} type: ${pets.type} age: ${pets.age}</li>`)
+                   
+                })
+            }
+                
+                
+        })
+
+        $('#add').on('click',function(e){
+            var pet={
+                name:$name.val(),
+                type:$type.val(),
+                age:$age.val()
+            }
+            console.log("pet",pet);
+
+            $.ajax({
+            type:'POST',
+            url:'localhost:3000/api/pets',
+            data:pet,
+            dataType: "html",
+            success:function( pets, textStatus, jQxhr){
+                pets=JSON.parse(pets)
+                $('#pets').append(`<li>pet name: ${pets.name} type: ${pets.type} age: ${pets.age}</li>` )
+                
+                
+            },
+            error:function(err){
+                alert("no!!")
+                console.log(err)
+            }
+            
+        })
+        //e.preventDefault();
+        })
+        
+    })
+
+
+  </script>
+
+
+</html>
+
+
+
+
+
+<!-- 
+
+<body>
+    AJAX
+    <div id="animal-info">
+
+    </div>
+    <button id = "mybtn">btn</button>
+
+    <script >
+        var mybtn = document.getElementById('mybtn');
+        
+mybtn.addEventListener('click',()=>{
+    var ajaxRequest = new XMLHttpRequest();
+    var text ="";
+    ajaxRequest.open('GET','https://learnwebcode.github.io/json-example/animals-1.json')
+    ajaxRequest.onload=function(){
+        var data = JSON.parse(ajaxRequest.responseText)
+        console.log(data)
+        var animal = document.getElementById("animal-info")
+        
+        for(i =0; i<data.length;i++){
+            text += `<p>${data[i].name} is a ${data[i].species}</p>`
+            console.log(text)
+        }
+        animal.innerHTML=text
+    }
+
+    ajaxRequest.send()
+})
+    </script>
+</body> -->
