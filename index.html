@@ -11,6 +11,10 @@
 
     </ul>
 
+    <ul id="newname">
+        
+    </ul>
+
     <p id="petid"></p>
 
     <form>
@@ -42,13 +46,41 @@
 
         $.ajax({
             type: 'GET',
-            url:'localhost:3000/api/pets',
+            crossDomain: true,
+            url:'http://localhost:3000/api/pets',
             success:function(pets){
                 
                 $.each(pets,function(i,pets){
                    $('#pets').append(`<li>pet name: ${pets.name} type: ${pets.type} age: ${pets.age}</li>`)
                    
                 })
+            }
+                
+                
+        })
+
+        $.ajax({
+            url:'http://localhost:5500/cors/get',
+            type: 'GET',
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: false
+            },
+            headers: {
+                'Access-Control-Allow-Credentials' : false,
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Methods':'GET',
+                'Access-Control-Allow-Headers':'application/json',
+            },
+            
+            success:function(guys){
+                
+                $.each(guys,function(i,guys){
+                   $('#newname').append(`<li>guys name: ${guys}</li>`)
+                   
+                })
+
+                console.log(guys)
             }
                 
                 
@@ -64,7 +96,7 @@
 
             $.ajax({
             type:'POST',
-            url:'localhost:3000/api/pets',
+            url:'/api/pets',
             data:pet,
             dataType: "html",
             success:function( pets, textStatus, jQxhr){
@@ -79,7 +111,7 @@
             }
             
         })
-        //e.preventDefault();
+        e.preventDefault();
         })
         
     })

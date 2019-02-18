@@ -2,6 +2,13 @@ var express = require('express');
 const app = express();
 var cors = require('cors');
 
+// app.use(cors({
+//     'origin': '*',
+//     'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     'preflightContinue': true
+//}));
+app.use(cors())
+
 app.use(express.urlencoded({
     extended: true
 }));
