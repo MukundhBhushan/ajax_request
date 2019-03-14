@@ -47,7 +47,7 @@
         $.ajax({
             type: 'GET',
             crossDomain: true,
-            url:'http://localhost:3000/api/pets',
+            url:'http://localhost:4000/api/pets',
             success:function(pets){
                 
                 $.each(pets,function(i,pets){
@@ -58,6 +58,21 @@
                 
                 
         })
+        
+        // $.ajax({
+        //     type: 'GET',
+        //     crossDomain: true,
+        //     url:'http://localhost:3000/cors/try',
+        //     success:function(pets){
+                
+        //         $.each(pets,function(i,doc){
+        //            $('#pets').append(`<li>${doc}</li>`)
+                   
+        //         })
+        //     }
+                
+                
+        // })
 
         $.ajax({
             url:'http://localhost:5500/cors/get',
@@ -96,7 +111,17 @@
 
             $.ajax({
             type:'POST',
-            url:'/api/pets',
+            url:'http://localhost:5500/api/pets',
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: false
+            },
+            headers: {
+                'Access-Control-Allow-Credentials' : false,
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Methods':'GET',
+                'Access-Control-Allow-Headers':'application/json',
+            },
             data:pet,
             dataType: "html",
             success:function( pets, textStatus, jQxhr){

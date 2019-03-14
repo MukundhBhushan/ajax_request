@@ -20,11 +20,16 @@ app.use(express.urlencoded({
 }));
 
 app.get('/cors/get',(req,res)=>{
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers");
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Headers");
   res.json({name:"mukundh"})
 })
 
+app.post('/api/pets',(req,res)=>{
+  console.log(req.body)
+  res.json(req.body)
+})
+
 app.listen(5500,()=>{
-    console.log("5000");
+    console.log("5500");
 })
